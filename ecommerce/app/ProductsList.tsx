@@ -13,6 +13,8 @@ export default function ProductsList({products}:{products: Product[]}){
             <Image src={'/'+ product.imageUrl} alt={product.name} width={150} height={150}></Image>
             <h2>{product.name}</h2>
             <p>${product.price}</p>
+            
+
           </Link>
       ))}
     </div>
