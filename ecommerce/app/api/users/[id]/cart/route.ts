@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { products } from "@/app/product-data";
 
-
+/// type interface
 type shoppingCart = Record <string, string []> ;
 
 
