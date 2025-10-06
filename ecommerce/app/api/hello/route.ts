@@ -3,3 +3,10 @@ export async function GET () {
     status: 200
   });
 }
+
+
+export async function POST () {
+  return new Response ('COMING FROM FUTURE, GOD IS GREAT', {
+    status: 200
+  });
+}
