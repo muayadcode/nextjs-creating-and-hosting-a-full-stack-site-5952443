@@ -1,28 +1,29 @@
+import { MongoClient, Db, ServerApiVersion } from 'mongodb';
 
-import { MongoClient, ServerApiVersion }  from 'mongodb';
+let cachedClient: MongoClient | null = null;
+let cachedDb: Db | null = null;
 
-
-
-export async function connectToDb(){
-const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.gfm8qd4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+export async function connectToDb() {
+  if (cachedClient && cachedDb) {
+    return { client: cachedClient, db: cachedDb };
   }
-});
 
-
-  try {
-
-    await client.connect();
-
-  } finally {
-    await client.close();
+  if (!process.env.MONGODB_URI) {
+    throw new Error('Please define MONGODB_URI in your .env file');
   }
+
+  const client = new MongoClient(process.env.MONGODB_URI, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    },
+  });
+
+  await client.connect();
+
+  cachedClient = client;
+  cachedDb = client.db("ecommerce-nextjs");
+
+  return { client, db: cachedDb };
 }
-
-

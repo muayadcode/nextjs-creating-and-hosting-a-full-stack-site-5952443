@@ -1,11 +1,12 @@
-import { products } from "@/app/product-data";
+import { connectToDb } from "../db";
 
+export async function GET() {
+  const { db } = await connectToDb();
+  const products = await db.collection('products').find({}).toArray();
 
-
-export async function GET () {
-  return new Response (JSON.stringify (products) , {
+  return new Response(JSON.stringify(products), {
     status: 200,
-    headers:{
+    headers: {
       'Content-Type': 'application/json'
     }
   });

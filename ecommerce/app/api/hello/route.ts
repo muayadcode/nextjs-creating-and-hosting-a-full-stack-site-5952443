@@ -1,12 +1,9 @@
-export async function GET () {
-  return new Response ('Hello From a Next.js route Handler', {
-    status: 200
-  });
-}
+export async function GET() {
+  console.log("USER:", process.env.MONGODB_USER);
+  console.log("PASS:", process.env.MONGODB_PASSWORD ? "✅ Yes" : "❌ Missing");
 
-
-export async function POST () {
-  return new Response ('COMING FROM FUTURE, GOD IS GREAT', {
-    status: 200
+  return new Response(JSON.stringify({ status: "ok" }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
   });
 }
