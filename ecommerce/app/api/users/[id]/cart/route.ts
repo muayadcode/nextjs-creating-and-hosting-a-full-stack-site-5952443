@@ -31,9 +31,9 @@ export async function GET (request: NextRequest, {params}: {params: Params}){
 
     })
   }
-  const carProducts = productIds.map(id => products.find (p => p.id === id));
+  const cartProducts = productIds.map(id => products.find (p => p.id === id));
 
-  return new Response (JSON.stringify(carProducts), {
+  return new Response (JSON.stringify(cartProducts), {
     status : 200, 
     headers:{
       'Content-Type': 'application/json'
@@ -59,6 +59,23 @@ export async function POST (request: NextRequest, {params}: {params: Params}){
 
   return new Response (JSON.stringify (carProducts),{
     status: 201,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
+
+export async function DELETE (request: NextRequest, {params}: {params: Params}){
+  const userId = params.id;
+  const body: CartBody = await request.json();
+  const productId = body.productId;
+
+  
+  carts[userId] = carts[userId]? carts[userId].filter(id => id !== productId) : [];
+  const carProducts = carts[userId].map(id => products.find (p => p.id === id));
+  
+  return new Response (JSON.stringify (carProducts),{
+    status: 202,
     headers: {
       'Content-Type': 'application/json'
     }
