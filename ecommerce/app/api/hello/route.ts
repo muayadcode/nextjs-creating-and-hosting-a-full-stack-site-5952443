@@ -1,8 +1,6 @@
 export async function GET() {
-  console.log("USER:", process.env.MONGODB_USER);
-  console.log("PASS:", process.env.MONGODB_PASSWORD ? "✅ Yes" : "❌ Missing");
-
-  return new Response(JSON.stringify({ status: "ok" }), {
+ 
+  return new Response(JSON.stringify({ message: "hello from NExt.JS route" }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
