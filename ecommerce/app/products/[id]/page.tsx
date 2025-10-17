@@ -1,8 +1,9 @@
-import { products } from "@/app/product-data"
 import NotFoundPage from "@/app/not-found"
-export default function ProdcutDetailPage({ params }:{params:{id: string}}){
+export default async function ProdcutDetailPage({ params }:{params:{id: string}}){
 
-  const product = products.find( p => p.id === params.id)
+  const response = await fetch ('https://legendary-sniffle-5p99qxwj4rrh446j-3000.app.github.dev/api/products/'+ params.id)
+  const product = await response.json();
+
   if (!product) {
     return <NotFoundPage/>
     }
