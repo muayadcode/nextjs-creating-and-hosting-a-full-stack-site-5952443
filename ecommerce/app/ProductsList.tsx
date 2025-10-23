@@ -25,6 +25,11 @@ export default function ProductsList({ products, initialCartProducts }: { produc
     setCartProducts(updatedCartProducts);
   }
   
+  function productIsInCart (productId: string){
+    return cartProducts.some(cp => cp.id === productId)
+  }
+
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map(product => (
@@ -44,10 +49,20 @@ export default function ProductsList({ products, initialCartProducts }: { produc
           <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
           <p className="text-gray-600">${product.price}</p>
 
-          <button className= "text-gray-600" onClick={(e) => {
+            {productIsInCart(product.id)
+             ? (
+                <button className= "text-gray-600" onClick={(e) => {
+                e.preventDefault();
+                addToCart (product.id)
+                }}>Remove from Cart</button>
+            ) : (
+            <button className= "text-gray-600" onClick={(e) => {
             e.preventDefault();
             addToCart (product.id)
             }}>Add to Cart</button>
+
+            ) }
+ 
         </Link>
       ))}
     </div>
