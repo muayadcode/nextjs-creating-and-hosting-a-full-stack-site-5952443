@@ -10,7 +10,7 @@ export default function ProductsList({ products, initialCartProducts }: { produc
   const [cartProducts, setCartProducts] = useState(initialCartProducts)
 
   async function addToCart(productId: string){
-    const response = await fetch (('https://legendary-sniffle-5p99qxwj4rrh446j-3000.app.github.dev/api/users/2/cart'), {
+    const response = await fetch ((process.env.NEXT_PUBLIC_SITE_URL + '/api/users/2/cart'), {
 
       method: 'POST',
       body: JSON.stringify({
@@ -25,7 +25,7 @@ export default function ProductsList({ products, initialCartProducts }: { produc
     setCartProducts(updatedCartProducts);
   }
   async function removeFromCart(productId: string){
-    const response = await fetch (('https://legendary-sniffle-5p99qxwj4rrh446j-3000.app.github.dev/api/users/2/cart'), {
+    const response = await fetch ((process.env.NEXT_PUBLIC_SITE_URL + '/api/users/2/cart'), {
 
       method: 'DELETE',
       body: JSON.stringify({

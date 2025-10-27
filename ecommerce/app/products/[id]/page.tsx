@@ -1,7 +1,10 @@
 import NotFoundPage from "@/app/not-found"
+
+export const dynamic = 'force-dynamic';
+
 export default async function ProdcutDetailPage({ params }:{params:{id: string}}){
 
-  const response = await fetch ('https://legendary-sniffle-5p99qxwj4rrh446j-3000.app.github.dev/api/products/'+ params.id)
+  const response = await fetch (process.env.NEXT_PUBLIC_SITE_URL + '/api/products/'+ params.id)
   const product = await response.json();
 
   if (!product) {
