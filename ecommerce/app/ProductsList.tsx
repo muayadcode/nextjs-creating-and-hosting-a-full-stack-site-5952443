@@ -24,7 +24,23 @@ export default function ProductsList({ products, initialCartProducts }: { produc
 
     setCartProducts(updatedCartProducts);
   }
-  
+  async function removeFromCart(productId: string){
+    const response = await fetch (('https://legendary-sniffle-5p99qxwj4rrh446j-3000.app.github.dev/api/users/2/cart'), {
+
+      method: 'DELETE',
+      body: JSON.stringify({
+        productId
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    const updatedCartProducts = await response.json();
+
+    setCartProducts(updatedCartProducts);
+  }
+
+
   function productIsInCart (productId: string){
     return cartProducts.some(cp => cp.id === productId)
   }
@@ -51,12 +67,12 @@ export default function ProductsList({ products, initialCartProducts }: { produc
 
             {productIsInCart(product.id)
              ? (
-                <button className= "text-gray-600" onClick={(e) => {
+                <button className= "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" onClick={(e) => {
                 e.preventDefault();
-                addToCart (product.id)
+                removeFromCart (product.id)
                 }}>Remove from Cart</button>
             ) : (
-            <button className= "text-gray-600" onClick={(e) => {
+            <button className= "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" onClick={(e) => {
             e.preventDefault();
             addToCart (product.id)
             }}>Add to Cart</button>
